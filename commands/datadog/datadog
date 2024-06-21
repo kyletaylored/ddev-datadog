@@ -1,0 +1,6 @@
+#!/bin/bash
+#ddev-generated
+## Description: Run datadog-agent inside datadog container
+## Usage: datadog [flags] [args]
+## Example: "ddev datadog status" or "ddev dataog dogstatsd" or "ddev datadog diagnose"
+datadog datadog-agent $@
