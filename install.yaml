@@ -9,12 +9,9 @@ name: datadog
 pre_install_actions:
   - |
     #ddev-description:Install agent configuration on host
-    ddev exec --raw -- DD_APPSEC_ENABLED=true DD_IAST_ENABLED=true DD_APPSEC_SCA_ENABLED=true bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script_docker_injection.sh)"
-    
-  - |
-    #ddev-description:Installing PHP agent
-    curl -LO https://github.com/DataDog/dd-trace-php/releases/latest/download/datadog-setup.php
-    php datadog-setup.php --php-bin=all --enable-appsec --enable-profiling
+    ddev exec curl -sSL https://s3.amazonaws.com/dd-agent/scripts/install_script_docker_injection.sh -o install_script.sh
+    ddev exec DD_APPSEC_ENABLED=true DD_IAST_ENABLED=true DD_APPSEC_SCA_ENABLED=true bash install_script.sh
+    # exit 1
 
 # - |
   # #ddev-nodisplay
@@ -86,6 +83,10 @@ dependencies:
 # DDEV environment variables can be interpolated into these actions
 post_install_actions:
   - chmod +x ~/.ddev/commands/datadog/datadog
+  - |
+    #ddev-description:Installing PHP agent
+    ddev exec -s datadog curl -LO https://github.com/DataDog/dd-trace-php/releases/latest/download/datadog-setup.php
+    ddev exec -s datadog php datadog-setup.php --php-bin=all --enable-appsec --enable-profiling
 # - touch somefile.${GOOS}.${DDEV_WEBSERVER}
 # - perl -pi -e 's/oldstring/newstring/g' docker-compose.addon-template.yaml
 

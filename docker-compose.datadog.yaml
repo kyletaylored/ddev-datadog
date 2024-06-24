@@ -21,7 +21,7 @@ services:
     volumes:
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
-      - /opt/datadog/apm:/opt/datadog/apm:rw
+      - /opt/datadog:/opt/datadog:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
     cap_add:
