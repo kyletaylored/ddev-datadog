@@ -8,13 +8,13 @@ name: datadog
 # DDEV environment variables can be interpolated into these actions
 pre_install_actions:
   - |
-  #ddev-description:Install agent configuration on host
-  ddev exec --raw -- DD_APPSEC_ENABLED=true DD_IAST_ENABLED=true DD_APPSEC_SCA_ENABLED=true bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script_docker_injection.sh)"
+    #ddev-description:Install agent configuration on host
+    ddev exec --raw -- DD_APPSEC_ENABLED=true DD_IAST_ENABLED=true DD_APPSEC_SCA_ENABLED=true bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script_docker_injection.sh)"
     
   - |
-  #ddev-description:Installing PHP agent
-  curl -LO https://github.com/DataDog/dd-trace-php/releases/latest/download/datadog-setup.php
-  php datadog-setup.php --php-bin=all --enable-appsec --enable-profiling
+    #ddev-description:Installing PHP agent
+    curl -LO https://github.com/DataDog/dd-trace-php/releases/latest/download/datadog-setup.php
+    php datadog-setup.php --php-bin=all --enable-appsec --enable-profiling
 
 # - |
   # #ddev-nodisplay
@@ -77,7 +77,7 @@ project_files:
 # List of files and directories that are copied into the global .ddev directory
 # DDEV environment variables can be interpolated into these filenames
 global_files:
-- commands/datadog/datadog
+  - commands/datadog/datadog
 
 # List of add-on names that this add-on depends on
 dependencies:
@@ -85,13 +85,13 @@ dependencies:
 
 # DDEV environment variables can be interpolated into these actions
 post_install_actions:
-- chmod +x ~/.ddev/commands/datadog/datadog
+  - chmod +x ~/.ddev/commands/datadog/datadog
 # - touch somefile.${GOOS}.${DDEV_WEBSERVER}
 # - perl -pi -e 's/oldstring/newstring/g' docker-compose.addon-template.yaml
 
 # Shell actions that can be done during removal of the add-on
 removal_actions:
-- rm ~/.ddev/commands/datadog/datadog
+  - rm ~/.ddev/commands/datadog/datadog
 
 # Advanced usage - yaml files can be read in and then used as go template actions
 # in pre_install_actions and post_install_actions
