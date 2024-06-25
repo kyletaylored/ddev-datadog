@@ -4,7 +4,6 @@ pre_install_actions:
     #ddev-description:Configure API key
     DDEV_APPROOT=$(ddev describe -j | jq -r .raw.approot)
     ENV_FILE="$DDEV_APPROOT/.ddev/.env"
-    DD_API_KEY=""
 
     # Function to read a specific variable from .env file
     get_env_var() {

@@ -1,11 +1,8 @@
-name: tests
+name: Tests
 on:
   pull_request:
   push:
     branches: [ main ]
-
-  schedule:
-  - cron: '25 08 * * *'
 
   workflow_dispatch:
     inputs:
@@ -32,8 +29,22 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # Define a job-level environment variable to check for the secret
+    env:
+      DD_API_KEY: ${{ secrets.DD_API_KEY }}
+
     steps:
-      - uses: ddev/github-action-add-on-test@v2
+      # Step to check if the secret is provided
+      - name: Check for DD_API_KEY
+        if: ${{ env.DD_API_KEY == '' }}
+        run: |
+          echo "Error: DD_API_KEY secret is not set. Please provide the secret in the repository settings." >&2
+          exit 1
+
+      # Step to run the test only if the secret is available
+      - name: Run DDEV Add-on Test
+        uses: ddev/github-action-add-on-test@v2
+        if: ${{ env.DD_API_KEY != '' }}
         with:
           ddev_version: ${{ matrix.ddev_version }}
           token: ${{ secrets.GITHUB_TOKEN }}

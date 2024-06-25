@@ -8,6 +8,8 @@ setup() {
   ddev delete -Oy ${PROJNAME} >/dev/null 2>&1 || true
   cd "${TESTDIR}"
   ddev config --project-name=${PROJNAME}
+  touch .ddev/.env
+  echo "DD_API_KEY=$DD_API_KEY" > .ddev/.env
   ddev start -y >/dev/null
 }
 
