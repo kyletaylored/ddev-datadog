@@ -7,15 +7,26 @@ services:
     pid: host
     networks: [ default, ddev_default ]
     environment:
+      # - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_HOSTNAME_TRUST_UTS_NAMESPACE=true
+      # Standard config
       - DD_API_KEY=${DD_API_KEY}
       - DD_SITE=${DD_SITE-datadoghq.com}
+      - DD_ENV=ddev
+      - DD_TAGS=${DD_TAGS-env:ddev}
+      # Logs config
+      - DD_LOGS_ENABLED=true
       - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_CONTAINER_EXCLUDE=image:datadog/agent:*
+      # APM config
       - DD_APM_ENABLED=true
       - DD_APM_NON_LOCAL_TRAFFIC=true
       - DD_APM_RECEIVER_SOCKET=/opt/datadog/apm/inject/run/apm.socket
+      # Container config
       - DD_SYSTEM_PROBE_NETWORK_ENABLED=true
       - DD_PROCESS_AGENT_ENABLED=true
-      - DD_ENV=ddev
+      - DD_CONTAINER_LABELS_AS_TAGS={"my.custom.label.team":"team"}
+      # Dogstatsd config
       - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
       - DD_DOGSTATSD_SOCKET=/opt/datadog/apm/inject/run/dsd.socket
     volumes:

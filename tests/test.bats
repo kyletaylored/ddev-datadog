@@ -36,8 +36,8 @@ teardown() {
 @test "install from release" {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  echo "# ddev get ddev/ddev-datadog with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get ddev/ddev-datadog
+  echo "# ddev get ${GITHUB_REPOSITORY} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get ${GITHUB_REPOSITORY}
   ddev restart >/dev/null
   health_checks
 }
